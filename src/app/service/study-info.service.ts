@@ -1,0 +1,82 @@
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {catchError, map} from "rxjs/operators";
+import {throwError} from "rxjs/internal/observable/throwError";
+import {MessageService} from "primeng/api";
+import {StudyInfo} from "../model/study-info.model";
+
+@Injectable({providedIn: 'root'})
+export class StudyInfoService {
+  public resourceUrl = 'http://localhost:8080/krim/study-infos';
+
+  constructor(private http: HttpClient, private messageService: MessageService) {
+  }
+
+  create(studyInfo: StudyInfo): Observable<HttpResponse<StudyInfo>> {
+    return this.http.post<StudyInfo>(this.resourceUrl, studyInfo, {observe: 'response'}).pipe(
+      map((response) => {
+        this.messageService.add({severity: 'success', summary: 'Potwierdzenie', detail: response.headers.get('KRIM')});
+        return response;
+      }),
+      catchError((error) => {
+        this.messageService.add({severity: 'warn', summary: 'Wystąpił błąd', detail: error.error.message});
+        return throwError(error);
+      })
+    );
+  }
+
+  update(studyInfo: StudyInfo): Observable<HttpResponse<StudyInfo>> {
+    return this.http.put<StudyInfo>(this.resourceUrl, studyInfo, {observe: 'response'}).pipe(
+      map((response) => {
+        this.messageService.add({severity: 'success', summary: 'Potwierdzenie', detail: response.headers.get('KRIM')});
+        return response;
+      }),
+      catchError((error) => {
+        this.messageService.add({severity: 'warn', summary: 'Wystąpił błąd', detail: error.error.message});
+        return throwError(error);
+      })
+    );
+  }
+
+  find(id: number): Observable<HttpResponse<StudyInfo>> {
+    return this.http.get<StudyInfo>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        this.messageService.add({severity: 'warn', summary: 'Wystąpił błąd', detail: error.error.message});
+        return throwError(error);
+      })
+    );
+  }
+
+  delete(id: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'}).pipe(
+      map((response) => {
+        this.messageService.add({severity: 'success', summary: 'Potwierdzenie', detail: response.headers.get('KRIM')});
+        return response;
+      }),
+      catchError((error) => {
+        this.messageService.add({severity: 'warn', summary: 'Wystąpił błąd', detail: error.error.message});
+        return throwError(error);
+      })
+    );
+  }
+
+  getAll(): Observable<HttpResponse<StudyInfo[]>> {
+    return this.http.get<StudyInfo[]>(this.resourceUrl, {observe: 'response'}).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Wystąpił nieoczekiwany błąd',
+          detail: error.error.message
+        });
+        return throwError(error);
+      })
+    );
+  }
+}

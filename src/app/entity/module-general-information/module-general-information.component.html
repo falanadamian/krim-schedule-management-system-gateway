@@ -1,0 +1,249 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Informacje o module</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="nameInput" class="control-label col-form-label">Nazwa</label>
+                  <input [(ngModel)]="moduleGeneralInformation.name" type="text" class="form-control" name="name"
+                         id="nameInput" placeholder="Nazwa">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.name !== moduleGeneralInformationCopy?.name">
+                    {{moduleGeneralInformationCopy?.name}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="studyCourseInput" class="control-label col-form-label">Kurs</label>
+                  <input [(ngModel)]="moduleGeneralInformation.studyCourse" type="text" class="form-control" name="studyCourse" id="studyCourseInput"
+                         placeholder="Kurs">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.studyCourse !== moduleGeneralInformationCopy?.studyCourse">
+                    {{moduleGeneralInformationCopy?.studyCourse}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="codeInput" class="control-label col-form-label">Kod</label>
+                  <input [(ngModel)]="moduleGeneralInformation.code" type="text" class="form-control" name="code" id="codeInput"
+                         placeholder="Kod">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.code !== moduleGeneralInformationCopy?.code">
+                    {{moduleGeneralInformationCopy?.code}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="facultyInput" class="control-label col-form-label">Wydział</label>
+                  <input [(ngModel)]="moduleGeneralInformation.faculty" type="text" class="form-control" name="faculty" id="facultyInput"
+                         placeholder="Wydział">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.faculty !== moduleGeneralInformationCopy?.faculty">
+                    {{moduleGeneralInformationCopy?.faculty}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group">
+                  <label for="studyFieldInput" class="control-label col-form-label">Kierunek</label>
+                  <input [(ngModel)]="moduleGeneralInformation.studyField" type="text" class="form-control" name="studyField"
+                         id="studyFieldInput" placeholder="Kierunek">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.studyField !== moduleGeneralInformationCopy?.studyField">
+                    {{moduleGeneralInformationCopy?.studyField}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group">
+                  <label for="educationProfileInput" class="control-label col-form-label">Profil</label>
+                  <input [(ngModel)]="moduleGeneralInformation.educationProfile" type="text" class="form-control" name="educationProfile" id="educationProfileInput"
+                         placeholder="Profil">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.educationProfile !== moduleGeneralInformationCopy?.educationProfile">
+                    {{moduleGeneralInformationCopy?.educationProfile}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label for="semesterInput" class="control-label col-form-label">Semestr</label>
+                  <input [(ngModel)]="moduleGeneralInformation.semester" type="number" class="form-control" name="semester" id="semesterInput"
+                         placeholder="Semestr">
+                  <small class="differ" *ngIf="moduleGeneralInformation?.semester !== moduleGeneralInformationCopy?.semester">
+                    {{moduleGeneralInformationCopy?.semester}}
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="studyLevelSelection" class="control-label col-form-label">Stopień studiów</label>
+                  <select class="form-control" [(ngModel)]="moduleGeneralInformation.studyLevel" name="studyLevelSelect"
+                          id="studyLevelSelection">
+                    <option *ngFor="let studyLevel of studyLevels" value="{{studyLevel}}">{{studyLevel}}</option>
+                  </select>
+                  <small class="differ" *ngIf="moduleGeneralInformation?.studyLevel !== moduleGeneralInformationCopy?.studyLevel">
+                    {{moduleGeneralInformationCopy?.studyLevel}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="lectureLanguageSelection" class="control-label col-form-label">Język wykładów</label>
+                  <select class="form-control" [(ngModel)]="moduleGeneralInformation.lectureLanguage" name="lectureLanguageSelect"
+                          id="lectureLanguageSelection">
+                    <option *ngFor="let language of languages" value="{{language}}">{{language}}</option>
+                  </select>
+                  <small class="differ" *ngIf="moduleGeneralInformation?.lectureLanguage !== moduleGeneralInformationCopy?.lectureLanguage">
+                    {{moduleGeneralInformationCopy?.lectureLanguage}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="studyTypeSelection" class="control-label col-form-label">Typ studiów</label>
+                  <select [(ngModel)]="moduleGeneralInformation.studyType" name="studyTypeSelect" class="form-control" id="studyTypeSelection">
+                    <option *ngFor="let studyType of studyTypes" value="{{studyType}}">{{studyType}}</option>
+                  </select>
+                  <small class="differ" *ngIf="moduleGeneralInformation?.studyType !== moduleGeneralInformationCopy?.studyType">
+                    {{moduleGeneralInformationCopy?.studyType}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <hr *ngIf="!outsourced">
+          <div *ngIf="!outsourced" class="card-body">
+            <h5 class="card-title">Powiązane</h5>
+            <div class="row">
+              <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                  <label for="moduleButton" class="control-label col-form-label">Moduł</label>
+                  <button data-toggle="modal" id="moduleButton" data-target="#module"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl</h5>
+                  </button>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                  <label for="responsibleUserButton" class="control-label col-form-label">Opiekun modułu</label>
+                  <button data-toggle="modal" id="responsibleUserButton" data-target="#responsible-user"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl</h5>
+                  </button>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                  <label for="academicUsersButton" class="control-label col-form-label">Uczestnicy modułów</label>
+                  <button data-toggle="modal" id="academicUsersButton" data-target="#academic-users"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl</h5>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                  <label for="modulesInManagementButton" class="control-label col-form-label">Sygnatura prowadzącego</label>
+                  <button data-toggle="modal" id="modulesInManagementButton" data-target="#responsible-user-signature"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl</h5>
+                  </button>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                  <label for="academicUsersSignaturesButton" class="control-label col-form-label">Sygnatura uczestniczących</label>
+                  <button data-toggle="modal" id="academicUsersSignaturesButton" data-target="#academic-users-signature"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl</h5>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button data-dismiss="modal" type="submit" class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fa fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="onCancelChange()" data-dismiss="modal" class="btn btn-dark waves-effect waves-light">Szczegóły</button>
+                <button type="submit" (click)="onCancelChange()" data-dismiss="modal" class="btn btn-dark waves-effect waves-light ml-1">Anuluj</button>
+                <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz</button>
+                <button *ngIf="outsourced" type="button" (click)="onConfirmChange()" data-dismiss="modal" class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zatwierdź</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<common-modal [id]="'module'"
+              [header]="'Edycja kroku'"
+>
+  <ng-template let-desc="description">
+      <app-modules></app-modules>
+  </ng-template>
+</common-modal>
+
+<common-modal [id]="'responsible-user'"
+              [header]="'Edycja kroku'"
+>
+  <ng-template let-desc="description">
+      <app-modules></app-modules>
+  </ng-template>
+</common-modal>
+
+<common-modal [id]="'academic-users'"
+              [header]="'Edycja kroku'"
+>
+  <ng-template let-desc="description">
+    <div class="container">
+      <app-modules></app-modules>
+    </div>
+  </ng-template>
+</common-modal>
+
+<common-modal [id]="'responsible-user-signature'"
+              [header]="'Edycja kroku'"
+>
+  <ng-template let-desc="description">
+    <div class="container">
+      <app-modules></app-modules>
+    </div>
+  </ng-template>
+</common-modal>
+
+<common-modal [id]="'academic-users-signature'"
+              [header]="'Edycja kroku'"
+>
+  <ng-template let-desc="description">
+    <div class="container">
+      <app-modules></app-modules>
+    </div>
+  </ng-template>
+</common-modal>

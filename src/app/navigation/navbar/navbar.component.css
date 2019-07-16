@@ -1,0 +1,23 @@
+.fas {
+  padding-right: 10px;
+}
+
+.logo-img {
+  height: 100%;
+  background: url('../../../assets/images/krim.png') no-repeat fixed center;
+  background-size: contain;
+  width: 100%;
+}
+
+.navbar-brand.logo {
+  padding: 5px 15px;
+}
+
+.navbar-title {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Limity zajęć</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="laboratoryClassLimitInput" class="control-label col-form-label">Zajęcia
+                    laboratoryjne</label>
+                  <input [(ngModel)]="classLimit.laboratoryClassLimit" type="number" class="form-control"
+                         name="laboratoryClassLimit"
+                         id="laboratoryClassLimitInput">
+                  <small class="differ"
+                         *ngIf="classLimit?.laboratoryClassLimit !== classLimitCopy?.laboratoryClassLimit">
+                    {{classLimitCopy?.laboratoryClassLimit}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="blackboardClassLimitInput" class="control-label col-form-label">Zajęcia
+                    tablicowe</label>
+                  <input [(ngModel)]="classLimit.blackboardClassLimit" type="number" class="form-control"
+                         name="blackboardClassLimit" id="blackboardClassLimitInput">
+                  <small class="differ"
+                         *ngIf="classLimit?.blackboardClassLimit !== classLimitCopy?.blackboardClassLimit">
+                    {{classLimitCopy?.blackboardClassLimit}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="projectClassLimitInput" class="control-label col-form-label">Zajęcia projektowe</label>
+                  <input [(ngModel)]="classLimit.projectClassLimit" type="number" class="form-control"
+                         name="projectClassLimit"
+                         id="projectClassLimitInput">
+                  <small class="differ" *ngIf="classLimit?.projectClassLimit !== classLimitCopy?.projectClassLimit">
+                    {{classLimitCopy?.projectClassLimit}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="seminarClassLimitInput" class="control-label col-form-label">Zajęcia seminaryjne</label>
+                  <input [(ngModel)]="classLimit.seminarClassLimit" type="number" class="form-control"
+                         name="seminarClassLimit" id="seminarClassLimitInput">
+                  <small class="differ" *ngIf="classLimit?.seminarClassLimit !== classLimitCopy?.seminarClassLimit">
+                    {{classLimitCopy?.seminarClassLimit}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange(); update()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+                <button type="submit" (click)="onConfirmChange(); saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

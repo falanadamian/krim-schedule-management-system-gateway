@@ -1,0 +1,127 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+/*@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";*/
+@import "../node_modules/primeicons/primeicons.css";
+@import '../node_modules/primeng/resources/themes/omega/theme.css';
+@import '../node_modules/primeng/resources/primeng.min.css';
+
+html {
+  /*background-color: #262626;*/
+}
+
+.ui-steps .ui-steps-item {
+  width: 33%;
+}
+
+.steps-custom .ui-steps {
+  margin-bottom: 50px;
+}
+
+.steps-custom .ui-steps .ui-steps-item .ui-menuitem-link {
+  height: 5px;
+  padding: 0 1em;
+  cursor: pointer;
+}
+
+.ui-state-default {
+  border-style: double none none none;
+}
+
+.steps-custom .ui-steps .ui-steps-item .ui-steps-number {
+  background-color: #0081c2;
+  color: #FFFFFF;
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-top: -10px;
+  margin-bottom: 6px;
+  font-size: 1.5em;
+}
+
+.steps-custom .ui-steps .ui-steps-item .ui-steps-title {
+  font-size: 1em;
+}
+
+.steps-custom .ui-steps .ui-steps-item .ui-steps-title {
+  color: #555555;
+}
+
+steps-custom .ui-steps .ui-steps-item.ui-state-disabled {
+  color: red;
+}
+
+.steps-custom .ui-steps .ui-steps-item.ui-state-disabled .ui-menuitem-link {
+  color: green;
+}
+
+.ui-multiselect {
+  width: 100%;
+}
+
+.ui-multiselect-label {
+  margin-bottom: 0px;
+}
+
+.ui-multiselect-item label {
+  margin-bottom: 0px;
+  /*font-size: 12px;*/
+}
+
+.ui-state-default {
+  border-style: double double double double ;
+}
+
+::ng-deep .input {
+  width: 100%!important;
+}
+
+.ui-table {
+  min-height: 500px;
+}
+
+.ui-table,
+.ui-table .ui-table-wrapper table {
+  font-size: 12px !important;
+}
+
+
+.btn-xsm {
+  padding: 0.15rem 0.25rem;
+  font-size: 0.675rem;
+  line-height: 1;
+  border-radius: 0.2rem;
+}
+
+.btn-xxsm {
+  padding: 0.05rem 0.05rem;
+  font-size: 0.475rem;
+  line-height: 1;
+  border-radius: 0.2rem;
+}
+
+.differ {
+  color: indianred;
+  font-weight: bold;
+}
+
+.ui-toast-close-icon {
+  color: black;
+}
+
+.ui-toast-message-warn {
+  background-color: indianred;
+}
+
+.ui-toast-message-success {
+  background-color: mediumseagreen;
+}
+
+:host ::ng-deep .custom-toast .ui-toast-message {
+  color: red;
+  background: #FC466B;
+  background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+  background: linear-gradient(to right, #3F5EFB, #FC466B);
+}

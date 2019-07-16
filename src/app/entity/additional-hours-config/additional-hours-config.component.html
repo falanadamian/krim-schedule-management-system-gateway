@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Konfiguracja dodatkowych godzin</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reasonSelection" class="control-label col-form-label">Powód</label>
+                  <select [(ngModel)]="additionalHoursConfig.reason" name="reasonSelect" class="form-control"
+                          id="reasonSelection">
+                    <option *ngFor="let additionalHoursReason of additionalHoursReasons"
+                            value="{{additionalHoursReason}}">{{additionalHoursReason}}
+                    </option>
+                  </select>
+                  <small class="differ" *ngIf="additionalHoursConfig?.reason !== additionalHoursConfigCopy?.reason">
+                    {{additionalHoursConfigCopy?.reason}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="coefficientInput" class="control-label col-form-label">Współczynnik</label>
+                  <input [(ngModel)]="additionalHoursConfig.coefficient" type="text" class="form-control"
+                         name="coefficient"
+                         id="coefficientInput">
+                  <small class="differ"
+                         *ngIf="additionalHoursConfig?.coefficient !== additionalHoursConfigCopy?.coefficient">
+                    {{additionalHoursConfigCopy?.coefficient}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="includesLimitInput" class="control-label col-form-label">Zawiera limity?</label>
+                  <p-inputSwitch [(ngModel)]="additionalHoursConfig.includesLimit" name="includesLimit"
+                                 id="includesLimitInput" class="form-control border-0"></p-inputSwitch>
+                  <small class="differ"
+                         *ngIf="additionalHoursConfig?.includesLimit !== additionalHoursConfigCopy?.includesLimit">
+                    {{additionalHoursConfigCopy?.includesLimit}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Uwagi</label>
+                  <textarea [(ngModel)]="additionalHoursConfig.note" class="form-control" name="notes"
+                            placeholder="Uwagi"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange(); update()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+                <button type="submit" (click)="saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

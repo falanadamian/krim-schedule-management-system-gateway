@@ -1,0 +1,239 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="px-0" [ngClass]="{'col-sm-12 col-lg-6' : errandToggled, 'col-sm-12 col-lg-12' : !errandToggled}">
+      <div class="card">
+        <p-toast position="bottom-center"></p-toast>
+        <form (submit)="onSubmit()">
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Moduł</span>
+              <button *ngIf="outsourced" type="button" (click)="toggleErrand()"
+                      class="btn btn-dark waves-effect waves-light float-right"><i class="fa fa-chevron-left"></i>
+                Rozwiń powiązane zlecenie
+              </button>
+              <button *ngIf="outsourced" type="button" (click)="toggleModuleGeneralInformation()"
+                      class="btn btn-dark waves-effect waves-light float-right"><i class="fa fa-chevron-left"></i>
+                Rozwiń szczegóły modułu
+              </button>
+            </h4>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="codeInput" class="control-label col-form-label">Kod modułu</label>
+                  <input [(ngModel)]="module.code" (change)="onModuleCodeChange()" type="text" class="form-control" name="code"
+                         id="codeInput" placeholder="Kod modułu">
+                  <small class="differ" *ngIf="module?.code !== moduleCopy?.code">
+                    {{moduleCopy?.code}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="responsibleUserButton" class="control-label col-form-label">Opiekun</label>
+                  <button (click)="loadUsers()" type="button" data-toggle="modal" id="responsibleUserButton" data-target="#responsible-user"
+                          class="btn btn-primary form-control">
+                    <h5>Wyberz opiekuna</h5>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="nameInput" class="control-label col-form-label">Nazwa modułu</label>
+                  <input [(ngModel)]="module.name" (change)="onModuleNameChange()" type="text" class="form-control" name="name"
+                         id="nameInput" placeholder="Nazwa modułu">
+                  <small class="differ" *ngIf="module?.name !== moduleCopy?.name">
+                    {{moduleCopy?.name}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="moduleGeneralInformation" class="control-label col-form-label">Informacje generalne</label>
+                  <button type="button" data-toggle="modal" id="moduleGeneralInformation" data-target="#module-general-informaton"
+                          class="btn btn-primary form-control">
+                    <h5>Utwórz informacje generalne modułu</h5>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Zajęcia</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Rodzaj zajęć</label>
+                  <select class="form-control" [(ngModel)]="module.type" name="studyTypeSelect"
+                          id="studyTypeSelection">
+                    <option *ngFor="let moduleType of moduleTypes" value="{{moduleType}}">{{moduleType}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Semestr</label>
+                  <select class="form-control" [(ngModel)]="module.semester" name="studyLevelSelect"
+                          id="studyLevelSelection">
+                    <option *ngFor="let semester of semesters" value="{{semester}}">{{semester}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="lectureInput" class="control-label col-form-label">Wykład</label>
+                  <input [(ngModel)]="module.classes.lecture" type="text" class="form-control" name="lecture"
+                         id="lectureInput" placeholder="Wykład">
+                  <small class="differ" *ngIf="module?.classes?.lecture !== moduleCopy?.classes?.lecture">
+                    {{moduleCopy?.classes?.lecture}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="laboratoryInput" class="control-label col-form-label">Laboratorium</label>
+                  <input [(ngModel)]="module.classes.laboratory" type="text" class="form-control" name="laboratory"
+                         id="laboratoryInput" placeholder="Laboratorium">
+                  <small class="differ" *ngIf="module?.classes?.laboratory !== moduleCopy?.classes?.laboratory">
+                    {{moduleCopy?.classes?.laboratory}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="blackboardInput" class="control-label col-form-label">Ćwiczenia</label>
+                  <input [(ngModel)]="module.classes.blackboard" type="text" class="form-control" name="blackboard"
+                         id="blackboardInput" placeholder="Ćwiczenia">
+                  <small class="differ" *ngIf="module?.classes?.blackboard !== moduleCopy?.classes?.blackboard">
+                    {{moduleCopy?.classes?.blackboard}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="projectInput" class="control-label col-form-label">Projektowe</label>
+                  <input [(ngModel)]="module.classes.project" type="text" class="form-control" name="project"
+                         id="projectInput" placeholder="Projektowe">
+                  <small class="differ" *ngIf="module?.classes?.project !== moduleCopy?.classes?.project">
+                    {{moduleCopy?.classes?.project}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="seminarInput" class="control-label col-form-label">Seminarium</label>
+                  <input [(ngModel)]="module.classes.seminar" type="text" class="form-control" name="seminar"
+                         id="seminarInput" placeholder="Seminarium">
+                  <small class="differ" *ngIf="module?.classes?.seminar !== moduleCopy?.classes?.seminar">
+                    {{moduleCopy?.classes?.seminar}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="elearningInput" class="control-label col-form-label">E-learning</label>
+                  <input [(ngModel)]="module.classes.elearning" type="text" class="form-control" name="elearning"
+                         id="elearningInput" placeholder="E-learning">
+                  <small class="differ" *ngIf="module?.classes?.elearning !== moduleCopy?.classes?.elearning">
+                    {{moduleCopy?.classes?.elearning}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="otherInput" class="control-label col-form-label">Inne</label>
+                  <input [(ngModel)]="module.classes.other" type="text" class="form-control" name="other"
+                         id="otherInput" placeholder="Inne">
+                  <small class="differ" *ngIf="module?.classes?.other !== moduleCopy?.classes?.other">
+                    {{moduleCopy?.classes?.other}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Egzamin</label>
+                  <select class="form-control" [(ngModel)]="module.examType" name="examTypeSelect"
+                          id="examTypeSelection">
+                    <option *ngFor="let examType of examTypes" value="{{examType}}">{{examType}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Dodaj plik</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                      <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Uwagi</label>
+                  <textarea class="form-control" aria-label="With textarea" placeholder="Uwagi"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button type="button" class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fa fa-chevron-left"></i> Powrót
+                </button>
+                <button (click)="clear()" type="button" class="btn btn-dark waves-effect waves-light">Wyczyść</button>
+                <button type="submit" class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="errandToggled && !moduleGeneralInformationToggled" class="px-0"
+         [ngClass]="{'col-sm-12 col-lg-6' : errandToggled}">
+      <errand [(errand)]="errand" [outsourced]="true"></errand>
+    </div>
+    <div *ngIf="!errandToggled && moduleGeneralInformationToggled" class="px-0"
+         [ngClass]="{'col-sm-12 col-lg-6' : moduleGeneralInformationToggled}">
+      <app-module-general-information [(moduleGeneralInformation)]="moduleGeneralInformation"
+                                      [outsourced]="true"></app-module-general-information>
+    </div>
+
+  </div>
+</div>
+
+
+<common-modal [id]="'responsible-user'"
+              [header]="'Wybierz opiekuna modułu'"
+>
+  <ng-template let-desc="description">
+    <app-user-list-view [(selectedUserId)]="module.moduleGeneralInformation.responsibleTeacherId" [selectionType]="SelectionType.RADIOBUTTON" (selectionsReloaded)="shouldLoadUsers = false" [loadSelections]="shouldLoadUsers"></app-user-list-view>
+  </ng-template>
+</common-modal>
+
+<common-modal [id]="'module-general-informaton'"
+              [header]="'Wybierz opiekuna modułu'"
+>
+  <ng-template let-desc="description">
+    <app-module-general-information [(moduleGeneralInformation)]="module.moduleGeneralInformation" [outsourced]="true"></app-module-general-information>
+  </ng-template>
+</common-modal>

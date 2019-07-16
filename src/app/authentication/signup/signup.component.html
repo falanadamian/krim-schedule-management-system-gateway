@@ -1,0 +1,141 @@
+<div class="d-flex no-block justify-content-center align-items-center mt-5">
+  <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="mt-5 px-5">
+      <div class="text-center card-img-top">
+        <span class="fa-stack fa-5x">
+          <i class="far fa-circle fa-stack-2x"></i>
+          <i class="fas fa-user-graduate fa-stack-1x"></i>
+        </span>
+      </div>
+      <div class="row card-body">
+        <div class="col-12 card-text">
+          <form name="form" (ngSubmit)="onSubmit()" class="form-horizontal mt-5">
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-user-tie"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="signupForm.username" name="username" type="text"
+                         class="form-control form-control-lg" placeholder="Nazwa użytkownika"
+                         aria-label="Username">
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-envelope-open"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="signupForm.email" name="email" type="text" class="form-control form-control-lg"
+                         placeholder="Email" aria-label="Email">
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-key"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="signupForm.password" name="password" type="password"
+                         class="form-control form-control-lg" placeholder="Hasło" aria-label="Password">
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-key"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="confirmPassword" name="confirmPasswordLocal" type="password"
+                         class="form-control form-control-lg" placeholder="Potwierdź hasło"
+                         aria-label="PasswordConfirmation">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-user-tag"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="signupForm.firstName" name="firstName" type="text"
+                         class="form-control form-control-lg" placeholder="Imię" aria-label="Username">
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-user-tag"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="signupForm.lastName" name="lastName" type="text"
+                         class="form-control form-control-lg" placeholder="Nazwisko" aria-label="Password">
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-fingerprint"></i>
+                </span>
+                  </div>
+                  <input [(ngModel)]="signupForm.identity" name="identity" type="text"
+                         class="form-control form-control-lg" placeholder="Id" aria-label="Id">
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-user-graduate"></i>
+                </span>
+                  </div>
+                  <select [(ngModel)]="signupForm.degree" name="reasonSelect" class="form-control"
+                          id="degreeSelection">
+                    <option *ngFor="let degree of degrees"
+                            value="{{degree}}">{{degree}}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fas fa-user-graduate"></i>
+                </span>
+                  </div>
+                  <select [(ngModel)]="signupForm.position" name="reasonSelect" class="form-control"
+                          id="positionSelection">
+                    <option *ngFor="let position of positions"
+                            value="{{position}}">{{position}}
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <div class="col-xs-12 pb-5">
+                <button type="button" data-target="#success-modal" data-toggle="modal" class="btn btn-block btn-lg btn-info">
+                  Zarejestruj się
+                </button>
+              </div>
+            </div>
+            <div class="form-group mb-0 mt-3">
+              <div class="col-sm-12 text-center">
+                Masz już konto?
+                <a routerLink="/authentication/signin" class="text-info ml-5">
+                  Zaloguj się
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-modal
+  [id]="'success-modal'"
+  [header]="'Rejestracja zakończona pomyślnie!'"
+  [description]="'Twoje zgłoszenie rejestracyjne zostało pomyślnie przesłane. Proszę czekać na aktywację konta przez administratora.'"
+  [confirmDescription]="'Dalej'"
+  (onConfirm)="onSubmit()"
+>
+</confirmation-modal>

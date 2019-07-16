@@ -1,0 +1,256 @@
+<div class="pull-left sidebar bg-dark text-light m-0" [ngClass]="{'sidebar-expanded': sidebarExpanded}">
+  <ul class="m-0 p-0">
+
+    <ng-container *hasRole="'ROLE_ADMIN'">
+      <li>
+        <a routerLink="/scrapper" routerLinkActive="active">
+          <i class="fas fa-download d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Scrapper</span>
+        </a>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#users" class="collapsed active">
+          <i class="fas fa-user d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Użytkownicy<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="users">
+          <li class="active">
+            <a routerLink="/user" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/users" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#modules" class="collapsed active">
+          <i class="fas fa-book-open d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Moduły<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="modules">
+          <li class="active">
+            <a routerLink="/module" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/modules" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#errands" class="collapsed active">
+          <i class="fas fa-briefcase d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Zlecenia<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="errands">
+          <li class="active">
+            <a routerLink="/errands/new" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/errands" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#schedules" class="collapsed active">
+          <i class="fas fa-calendar-alt d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Rozkłady zajęć<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="schedules">
+          <li class="active">
+            <a routerLink="/schedules/new" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/schedules" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#additional-hour-configs" class="collapsed active">
+          <i class="fas fa-business-time d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">K.D.G<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="additional-hour-configs">
+          <li class="active">
+            <a routerLink="/additional-hours-config" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/additional-hours-configs" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#class-limits" class="collapsed active">
+          <i class="fas fa-chalkboard-teacher d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Limity zajęć<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="class-limits">
+          <li class="active">
+            <a routerLink="/class-limit" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/class-limits" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#limit-configs" class="collapsed active">
+          <i class="fas fa-users-cog d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Limit config<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="limit-configs">
+          <li class="active">
+            <a routerLink="/limit-config" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/limit-configs" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a routerLink="/user-configs" routerLinkActive="active" >
+          <i class="fas fa-users-cog d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">User config</span>
+        </a>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#classes" class="collapsed active">
+          <i class="fas fa-user-shield d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Zajęcia- godziny<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="classes">
+          <li class="active">
+            <a routerLink="/class" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/classes" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#module-general-informations" class="collapsed active">
+          <i class="fas fa-book-open d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Moduły G.I<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="module-general-informations">
+          <li class="active">
+            <a routerLink="/module-general-information" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/module-general-informations" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a data-toggle="collapse" data-target="#user-signatures" class="collapsed active">
+          <i class="fas fa-user-secret d-inline"></i>
+          <span class="sidebar-label font-weight-bold ml-3">Sygnatury<i class="fas fa-chevron-down pull-right"></i></span>
+        </a>
+        <ul class="m-0 p-0 sub-menu collapse bg-danger" id="user-signatures">
+          <li class="active">
+            <a routerLink="/user-signature" routerLinkActive="active">
+              <i class="fas fa-plus-square fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Dodaj</span>
+            </a>
+          </li>
+          <li class="active">
+            <a routerLink="/user-signatures" routerLinkActive="active">
+              <i class="fas fa-list-alt fa-lg d-inline"></i>
+              <span class="sidebar-label font-weight-bold ml-3">Wyświetl wszystkie</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
+
+
+    <ng-container *hasRole="['ROLE_ADMIN', 'ROLE_USER']">
+    <li>
+      <a data-toggle="collapse" data-target="#module-management" class="collapsed active">
+        <i class="fas fa-book-open d-inline"></i>
+        <span class="sidebar-label font-weight-bold ml-3">Moduły<i class="fas fa-chevron-down pull-right"></i></span>
+      </a>
+      <ul class="m-0 p-0 sub-menu collapse bg-danger" id="module-management">
+        <li class="active">
+          <a routerLink="/module-management" routerLinkActive="active">
+            <i class="fas fa-list-alt fa-lg d-inline"></i>
+            <span class="sidebar-label font-weight-bold ml-3">Moje moduły</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a routerLink="/schedule-overview" routerLinkActive="active">
+        <i class="fas fa-download d-inline"></i>
+        <span class="sidebar-label font-weight-bold ml-3">Rozkład zajęć</span>
+      </a>
+    </li>
+    </ng-container>
+
+  </ul>
+</div>

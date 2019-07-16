@@ -1,0 +1,188 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="px-0" [ngClass]="{'col-sm-12 col-lg-6' : moduleToggled, 'col-sm-12 col-lg-12' : !moduleToggled}">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Zlecenie</span>
+              <button *ngIf="!outsourced" type="button" (click)="toggleModule()" class="btn btn-dark waves-effect waves-light float-right">
+                <i class="fa fa-chevron-left"></i> Rozwiń powiązany moduł
+              </button>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="codeInput" class="control-label col-form-label">Kod zlecenia</label>
+                  <input [(ngModel)]="errand.code" type="text" class="form-control" name="code"
+                         id="codeInput" placeholder="Kod zlecenia">
+                  <small class="differ" *ngIf="errand?.code !== errandCopy?.code">
+                    {{errandCopy?.code}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="errandNumberInput" class="control-label col-form-label">Numer zlecenia</label>
+                  <input [(ngModel)]="errand.errandNumber" type="text" class="form-control" name="errandNumber"
+                         id="errandNumberInput" placeholder="Numer zlecenia">
+                  <small class="differ" *ngIf="errand?.errandNumber !== errandCopy?.errandNumber">
+                    {{errandCopy?.errandNumber}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="departmentInput" class="control-label col-form-label">Wydział/ katedra</label>
+                  <input [(ngModel)]="errand.department" type="text" class="form-control" name="department"
+                         id="departmentInput" placeholder="Wydział/ katedra">
+                  <small class="differ" *ngIf="errand?.department !== errandCopy?.department">
+                    {{errandCopy?.department}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="additionalHoursRatioInput" class="control-label col-form-label">Współczynnik dodatkowych godzin</label>
+                  <input [(ngModel)]="errand.additionalHoursRatio" type="number" class="form-control" name="additionalHoursRatio"
+                         id="additionalHoursRatioInput" placeholder="Współczynnik dodatkowych godzin">
+                  <small class="differ" *ngIf="errand?.additionalHoursRatio !== errandCopy?.additionalHoursRatio">
+                    {{errandCopy?.additionalHoursRatio}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Zajęcia</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Rodzaj zajęć</label>
+                  <select class="form-control" [(ngModel)]="errand.classType" name="examTypeSelect"
+                          id="examTypeSelection">
+                    <option *ngFor="let classType of classTypes" value="{{classType}}">{{classType}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="hoursInput" class="control-label col-form-label">Liczba godzin</label>
+                  <input [(ngModel)]="errand.hours" type="number" class="form-control" name="hours"
+                         id="hoursInput" placeholder="Liczba godzin">
+                  <small class="differ" *ngIf="errand?.hours !== errandCopy?.hours">
+                    {{errandCopy?.hours}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="groupsInput" class="control-label col-form-label">Liczba grup</label>
+                  <input [(ngModel)]="errand.groups" type="number" class="form-control" name="groups"
+                         id="groupsInput" placeholder="Liczba grup">
+                  <small class="differ" *ngIf="errand?.groups !== errandCopy?.groups">
+                    {{errandCopy?.groups}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="studentsInput" class="control-label col-form-label">Liczba studentów</label>
+                  <input [(ngModel)]="errand.students" type="number" class="form-control" name="students"
+                         id="studentsInput" placeholder="Liczba studentów">
+                  <small class="differ" *ngIf="errand?.students !== errandCopy?.students">
+                    {{errandCopy?.students}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Dodaj plik</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="fileSelect" name="fileSelection">
+                      <label class="custom-file-label" for="fileSelect">Wybierz plik</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Uwagi</label>
+                  <textarea [(ngModel)]="errand.note" class="form-control" aria-label="With textarea" placeholder="Uwagi" name="notes"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr *ngIf="!outsourced">
+          <div *ngIf="!outsourced" class="card-body">
+            <h5 class="card-title">Powiązane</h5>
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                  <label for="moduleButton" class="control-label col-form-label">Moduł</label>
+                  <button data-toggle="modal" id="moduleButton" data-target="#module"
+                          class="btn btn-primary form-control">
+                    <h5>Wybierz moduł</h5>
+                  </button>
+                  <small class="differ" *ngIf="module">
+                    <label>Wybrany moduł: </label>
+                    <span class="ml-1">[{{module.code}}] {{module.name}}</span>
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange(); update()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+                <button type="submit" (click)="onConfirmChange(); saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="moduleToggled" class="px-0" [ngClass]="{'col-sm-12 col-lg-6' : moduleToggled}">
+      <module [(module)]="module" [outsourced]="true"></module>
+    </div>
+  </div>
+</div>
+
+<common-modal [id]="'module'"
+              [header]="'Dobierz moduł'"
+>
+  <ng-template let-desc="description">
+    <div class="container-fluid">
+      <app-module-list-view [outsourced]="true" [selectionType]="SelectionType.RADIOBUTTON" [(selectedModule)]="module"></app-module-list-view>
+    </div>
+  </ng-template>
+</common-modal>

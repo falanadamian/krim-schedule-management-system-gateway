@@ -1,0 +1,424 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">
+            <span>Użytkownicy</span>
+          </h4>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <p-toast position="bottom-center"></p-toast>
+              <p-table #dt [columns]="columns"
+                       [value]="users"
+                       [(selection)]="selectedUser"
+                       [paginator]="true"
+                       [rows]="20"
+                       [pageLinks]="5"
+                       [loading]="loading"
+                       [rowsPerPageOptions]="[10,15,20,30,50]"
+                       [autoLayout]="true"
+                       (onEditComplete)="getRow($event)"
+              >
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Filtruj globalnie"
+                           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableHeaderCheckbox *ngIf="selectionType == SelectionType.CHECKBOX"></p-tableHeaderCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON"></p-tableRadioButton>
+                    </th>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                  </tr>
+                  <!--FILTERS-->
+                  <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                      <input style="width: 100%;" *ngSwitchCase="'firstName'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'lastName'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'identity'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'username'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'email'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'reduction'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'note'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'code'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+                      <p-multiSelect *ngSwitchCase="'degree'"
+                                     [options]="degreeItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <!--<p-multiSelect *ngSwitchCase="'roles'"
+                                     [options]="roleTypeItems"
+                                     (onChange)="dt.filter($event.value, col.field.roleType, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>-->
+
+                      <p-multiSelect *ngSwitchCase="'position'"
+                                     [options]="positionItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                    </th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableCheckbox *ngIf="selectionType == SelectionType.CHECKBOX" [value]="rowData"></p-tableCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON" [value]="rowData"></p-tableRadioButton>
+                    </th>
+
+
+                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                      <ng-container>
+
+                        <td *ngSwitchCase="'firstName'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'lastName'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'identity'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'username'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'email'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'degree'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <select [(ngModel)]="rowData[col.field]" (change)="onDegreeSelectChange($event)">
+                                <option *ngFor="let degree of degrees" value="{{degree}}">{{degree}}
+                                </option>
+                              </select>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'roles'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <!--<select [(ngModel)]="rowData[col.field]" (change)="onRoleSelectChange($event)">
+                                <option *ngFor="let roleType of roleTypes" value="{{roleType}}">{{roleType}}
+                                </option>
+                              </select>-->
+                              <p-multiSelect [options]="roleTypeItems"
+                                             (onChange)="onRoleSelectChange($event)"
+                                             [(ngModel)]="rowData[col.field]"
+                                             appendTo="body"
+                                             defaultLabel="Wybierz"
+                                             [maxSelectedLabels]="1"
+                                             selectedItemsLabel="Wybranych: {0}"
+                              ></p-multiSelect>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              <ng-container *ngFor="let role of rowData[col.field]">
+                                {{role.roleType}}
+                              </ng-container>
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+
+
+                        <td *ngSwitchCase="'reduction'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="number" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'position'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <select [(ngModel)]="rowData[col.field]" (change)="onPositionSelectChange($event)">
+                                <option *ngFor="let position of positions" value="{{position}}">{{position}}
+                                </option>
+                              </select>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'note'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+
+                        <td *ngSwitchCase="'studyInfo'" class="text-center">
+                          <button (click)="mark(rowData)" data-target="#study-info" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'config'" class="text-center">
+                          <button (click)="mark(rowData)" data-target="#user-config" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'modulesInChargeovesIds'" class="text-center">
+                          <button (click)="loadModulesInChargeover()" data-target="#modules-chargeover" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'modulesInManagementIds'" class="text-center">
+                          <button (click)="mark(rowData); loadModulesInManagement()" data-target="#modules-management" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'actions'" pEditableColumn [pEditableColumn]="rowData"
+                            style="cursor: default"
+                            [pEditableColumnField]="col.field" class="text-right">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <div class="container px-0">
+                                <div class="row no-gutters flex-nowrap">
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button [routerLink]="['/users/' + rowData['id']]" pTooltip="Szczegóły"
+                                            class="btn btn-primary btn-xsm">
+                                      <i class="fas fa-search-plus"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#delete-modal" data-toggle="modal"
+                                            class="btn btn-primary btn-xsm" pTooltip="Usuń">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#update-modal" data-toggle="modal"
+                                            pTooltip="Zapisz" class="btn btn-primary btn-xsm mr-2">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              <div class="container px-0">
+                                <div class="row no-gutters flex-nowrap">
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button [routerLink]="['/users/' + rowData['id']]" pTooltip="Szczegóły"
+                                            class="btn btn-primary btn-xsm">
+                                      <i class="fas fa-search-plus"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#delete-modal" data-toggle="modal"
+                                            class="btn btn-primary btn-xsm" pTooltip="Usuń">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#update-modal" data-toggle="modal"
+                                            pTooltip="Zapisz" class="btn btn-primary btn-xsm mr-2">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-modal
+  [id]="'delete-modal'"
+  [header]="'Potwierdzenie usunięcia'"
+  [description]="'Czy napewno chcesz usunąć wybrany rekord?'"
+  [closeDescription]="'Nie'"
+  [confirmDescription]="'Tak'"
+  (onConfirm)="delete()">
+</confirmation-modal>
+
+<confirmation-modal
+  [id]="'update-modal'"
+  [header]="'Potwierdzenie aktualizacji'"
+  [description]="'Czy napewno chcesz zaktualizować wybrany rekord?'"
+  [closeDescription]="'Nie'"
+  [confirmDescription]="'Tak'"
+  (onConfirm)="update()">
+</confirmation-modal>
+
+<common-modal *ngIf="markedUser"
+              [id]="'user-config'"
+              [header]="'Powiązana konfiguracja'"
+>
+  <ng-template let-desc="description">
+    <user-config-list-view [(selectedUserConfig)]="markedUser.userConfig" [selectionType]="SelectionType.RADIOBUTTON"></user-config-list-view>
+  </ng-template>
+</common-modal>
+
+<!--<common-modal *ngIf="markedUser"
+              [id]="'modules-chargeover'"
+              [header]="'Odpowiedzialny za moduły'"
+>
+  <ng-template let-desc="description">
+    <app-module-list-view [(selectedModules)]="userModulesInChargeover" [selectionType]="SelectionType.CHECKBOX"></app-module-list-view>
+  </ng-template>
+</common-modal>-->
+
+
+<common-modal *ngIf="markedUser"
+              [id]="'modules-chargeover'"
+              [header]="'Odpowiedzialny za moduły'"
+>
+  <ng-template let-desc="description">
+    <app-module-general-information-list-view [(selectedModuleGeneralInformationIds)]="markedUser.modulesInChargeovesIds" (selectionsReloaded)="shouldLoadModulesInChargeover = false" [loadSelections]="shouldLoadModulesInChargeover"></app-module-general-information-list-view>
+  </ng-template>
+</common-modal>
+
+
+<common-modal *ngIf="markedUser"
+              [id]="'modules-management'"
+              [header]="'Prowadzi moduły'"
+>
+  <ng-template let-desc="description">
+    <app-module-general-information-list-view [(selectedModuleGeneralInformationIds)]="markedUser.modulesInManagementIds" (selectionsReloaded)="shouldLoadModulesInManagement = false" [loadSelections]="shouldLoadModulesInManagement"></app-module-general-information-list-view>
+  </ng-template>
+</common-modal>
+
+
+<common-modal *ngIf="markedUser"
+              [id]="'document'"
+              [header]="'Powiązany dokument'"
+>
+  <ng-template let-desc="description">
+  </ng-template>
+</common-modal>
+
+<common-modal *ngIf="markedUser"
+              [id]="'schedule'"
+              [header]="'Powiązany plan'"
+>
+  <ng-template let-desc="description">
+    <app-schedule></app-schedule>
+  </ng-template>
+</common-modal>
+
+<common-modal *ngIf="markedUser"
+              [id]="'study-info'"
+              [header]="'Wprowadź informacje o studiach'"
+>
+  <ng-template let-desc="description">
+    <study-info [(studyInfo)]="markedUser.studyInfo" [outsourced]="true"></study-info>
+  </ng-template>
+</common-modal>

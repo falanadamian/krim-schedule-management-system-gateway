@@ -1,0 +1,5 @@
+export enum StudyLevel {
+  FIRST_CYCLE = 'FIRST_CYCLE',
+  SECOND_CYCLE = 'SECOND_CYCLE',
+  THIRD_CYCLE = 'THIRD_CYCLE'
+}

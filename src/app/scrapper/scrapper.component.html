@@ -1,0 +1,93 @@
+<div class="container-fluid">
+<div class="row">
+  <div class="col-sm-12 px-0">
+    <div class="card">
+      <form>
+        <div class="card-body">
+          <h4 class="card-title">
+            <span>Scrapper</span>
+          </h4>
+          <steps [(activeIndex)]="activeIndex" [(reachedIndex)]="reachedIndex" [stepsNumber]="scrapperOptions.length" (change)="onChange($event)">
+            <step label="Inicjalizacja" id="myStep">
+              <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                  <div class="card">
+                    <form>
+                      <div class="card-body">
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <span class="badge badge-info">
+                            <i class="fas fa-info m-r-5"></i>
+                        </span>
+                          <strong> Form Action at begining of the form.</strong>
+                          <button [disabled]="reachedIndex > activeIndex" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <h5 class="card-title">Ogólne</h5>
+                        <div class="row">
+                          <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                              <label class="control-label col-form-label">Rodzaj pobieranych danych:</label>
+                              <select [(ngModel)]="selectedScrapperOption" [disabled]="reachedIndex > activeIndex" class="form-control" name="scrapperOptionSelect">
+                                <option *ngFor="let scrapperOption of scrapperOptions">{{scrapperOption}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                              <label class="control-label col-form-label">Weryfikacja:</label>
+                              <select [(ngModel)]="selectedVerificationOption" [disabled]="reachedIndex > activeIndex" class="form-control" name="verificationOptionSelect">
+                                <option *ngFor="let verificationOption of verificationOptions">{{verificationOption}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <div *ngFor="let scrapperUrl of scrapperUrls; let index = index; trackBy:trackByFn" class="form-group">
+                              <label class="control-label col-form-label">Podaj URL:</label>
+                              <div class="input-group">
+                                <input [(ngModel)]="scrapperUrls[index]" [ngModelOptions]="{standalone: true}" [disabled]="reachedIndex > activeIndex" type="text" class="form-control" placeholder="URL">
+                                <div class="input-group-append">
+                                  <button (click)="deleteScrapperUrl(scrapperUrl)" [disabled]="reachedIndex > activeIndex" class="btn btn-outline-secondary" type="button">Usuń - {{scrapperUrls[index]}}</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="action-form">
+                          <div class="form-group m-b-0 text-right">
+                            <button [disabled]="reachedIndex > activeIndex" type="button" class="btn btn-dark waves-effect waves-light">Zweryfikuj</button>
+                            <button (click)="addScrapperUrl()" [disabled]="reachedIndex > activeIndex" type="button" class="btn btn-info m-r-5 waves-effect waves-light ml-1">Dodaj kolejny URL
+                            </button>
+                            <button class="btn btn-dark waves-effect waves-light ml-1" (click)="onInitializationNext()">Dalej <i class="fa fa-chevron-right"></i></button>
+                            <!--<button class="btn btn-dark waves-effect waves-light ml-1" (click)="onWS()">WS <i class="fa fa-chevron-right"></i></button>-->
+                            <button class="btn btn-dark waves-effect waves-light ml-1" (click)="onWSinit()">WS <i class="fa fa-chevron-right"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </step>
+
+            <step label="Pobieranie">
+              wery
+            </step>
+
+            <step label="Podsumowanie">
+              pods
+            </step>
+          </steps>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

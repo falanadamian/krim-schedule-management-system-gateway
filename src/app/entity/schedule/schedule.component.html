@@ -1,0 +1,167 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="px-0" [ngClass]="{'col-sm-12 col-lg-4' : errandToggled, 'col-sm-12 col-lg-12' : !errandToggled}">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Prowadzący - plan</span>
+            </h4>
+
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <span class="badge badge-info">
+                            <i class="fas fa-info m-r-5"></i>
+                        </span>
+              <strong> Form Action at begining of the form.</strong>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <!--<div class="row">
+              <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                  <label for="inputname" class="control-label col-form-label">Kod modułu</label>
+                  <input type="text" class="form-control" id="inputname" placeholder="Kod zlecenia">
+                </div>
+              </div>
+            </div>-->
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="assigneeSelection" class="control-label col-form-label">Prowadzący</label>
+
+                  <p-multiSelect [(ngModel)]="selectedAssigneeId"
+                                 [options]="userItems"
+                                 defaultLabel="Wybierz prowadzącego"
+                                 [maxSelectedLabels]="1"
+                                 selectedItemsLabel="Wybranych: {0}"
+                                 (onChange)="onAssigneeChange($event)"
+                                 name="assigneeSelect"
+                                 id="assigneeSelection"
+                  ></p-multiSelect>
+                </div>
+              </div>
+              <!--<div class="col-sm-6">
+                <div class="form-group">
+                  <label for="inputlname" class="control-label col-form-label">Kto zeznał</label>
+                  <input type="text" class="form-control" id="inputlname" placeholder="Kto zeznał">
+                </div>
+              </div>-->
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Zajęcia</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="lecture" class="control-label col-form-label">Wykład</label>
+                  <input [(ngModel)]="schedule.classes.lecture" type="number" class="form-control" name="lecture"
+                         id="lecture" placeholder="Wykład">
+                  <small class="differ" *ngIf="schedule?.classes.lecture !== scheduleCopy?.classes.lecture">
+                    {{scheduleCopy?.classes.lecture}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="laboratory" class="control-label col-form-label">Laboratorium</label>
+                  <input [(ngModel)]="schedule.classes.laboratory" type="number" class="form-control" name="groups"
+                         id="laboratory" placeholder="Laboratorium">
+                  <small class="differ" *ngIf="schedule?.classes.laboratory !== scheduleCopy?.classes.laboratory">
+                    {{scheduleCopy?.classes.laboratory}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="blackboard" class="control-label col-form-label">Ćwiczenia</label>
+                  <input [(ngModel)]="schedule.classes.blackboard" type="number" class="form-control" name="blackboard"
+                         id="blackboard" placeholder="Ćwiczenia">
+                  <small class="differ" *ngIf="schedule?.classes.blackboard !== scheduleCopy?.classes.blackboard">
+                    {{scheduleCopy?.classes.blackboard}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="project" class="control-label col-form-label">Projektowe</label>
+                  <input [(ngModel)]="schedule.classes.project" type="number" class="form-control" name="project"
+                         id="project" placeholder="Projektowe">
+                  <small class="differ" *ngIf="schedule?.classes.project !== scheduleCopy?.classes.project">
+                    {{scheduleCopy?.classes.project}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="seminar" class="control-label col-form-label">Seminarium</label>
+                  <input [(ngModel)]="schedule.classes.seminar" type="number" class="form-control" name="seminar"
+                         id="seminar" placeholder="Seminarium">
+                  <small class="differ" *ngIf="schedule?.classes.seminar !== scheduleCopy?.classes.seminar">
+                    {{scheduleCopy?.classes.seminar}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="elearning" class="control-label col-form-label">E-learning</label>
+                  <input [(ngModel)]="schedule.classes.elearning" type="number" class="form-control" name="elearning"
+                         id="elearning" placeholder="E-learning">
+                  <small class="differ" *ngIf="schedule?.classes.elearning !== scheduleCopy?.classes.elearning">
+                    {{scheduleCopy?.classes.elearning}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="other" class="control-label col-form-label">Inne</label>
+                  <input [(ngModel)]="schedule.classes.other" type="number" class="form-control" name="other"
+                         id="other" placeholder="Inne">
+                  <small class="differ" *ngIf="schedule?.classes.other !== scheduleCopy?.classes.other">
+                    {{scheduleCopy?.classes.other}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Egzamin</label>
+                  <select class="form-control" [(ngModel)]="schedule.examType" name="examTypeSelect"
+                          id="examTypeSelection">
+                    <option *ngFor="let examType of examTypes" value="{{examType}}">{{examType}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange();" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+                <button *ngIf="!outsourced" type="submit" (click)="onConfirmChange(); saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

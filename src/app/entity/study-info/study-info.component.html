@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Godziny zajęć</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="studyYear" class="control-label col-form-label">Rok studiów</label>
+                  <input [(ngModel)]="studyInfo.studyYear" type="number" class="form-control"
+                         name="studyYear"
+                         id="studyYear">
+                  <small class="differ"
+                         *ngIf="studyInfo?.studyYear !== studyInfoCopy?.studyYear">
+                    {{studyInfoCopy?.studyYear}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label for="registeredPhD" class="control-label col-form-label">Otwarty przewód</label>
+                  <p-inputSwitch [(ngModel)]="studyInfo.registeredPhD" name="registeredPhD"
+                                 id="registeredPhD" class="form-control border-0"></p-inputSwitch>
+                  <small class="differ"
+                         *ngIf="studyInfo?.registeredPhD !== studyInfoCopy?.registeredPhD">
+                    {{studyInfoCopy?.registeredPhD}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label for="scholarship" class="control-label col-form-label">Stypendium</label>
+                  <p-inputSwitch [(ngModel)]="studyInfo.scholarship" name="scholarship"
+                                 id="scholarship" class="form-control border-0"></p-inputSwitch>
+                  <small class="differ"
+                         *ngIf="studyInfo?.scholarship !== studyInfoCopy?.scholarship">
+                    {{studyInfoCopy?.scholarship}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="patron" class="control-label col-form-label">Opiekun</label>
+                  <p-multiSelect id="patron" name="patronSelect" [options]="usersItems" [(ngModel)]="usersIds" [selectionLimit]="1" [defaultLabel]="'Wybierz opiekuna'" (onChange)="selectPatron($event)"></p-multiSelect>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="button" (click)="clear()"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zatwierdź
+                </button>
+                <button *ngIf="!outsourced" type="submit" (click)="onConfirmChange(); saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

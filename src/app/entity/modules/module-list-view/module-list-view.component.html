@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">
+            <span>Moduł</span>
+          </h4>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <p-toast position="bottom-center"></p-toast>
+              <p-table #dt [columns]="columns"
+                       [value]="modules"
+                       selectionMode="multiple"
+                       [(selection)]="selectionType == SelectionType.CHECKBOX ? selectedModules : selectedModule"
+                       [paginator]="true"
+                       [rows]="15"
+                       [pageLinks]="20"
+                       [loading]="loading"
+                       [rowsPerPageOptions]="[10,15,20,25]" [autoLayout]="true"
+                       (onRowSelect)="onRowSelected($event)"
+                       (onRowUnselect)="onRowUnselected($event)"
+              >
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Filtruj globalnie"
+                           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+
+
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableHeaderCheckbox *ngIf="selectionType == SelectionType.CHECKBOX" [attr.rowspan]="getDeepestColumnsChildColumnLevel(columns)"></p-tableHeaderCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON" [attr.rowspan]="getDeepestColumnsChildColumnLevel(columns)"></p-tableRadioButton>
+                    </th>
+                    <ng-container *ngFor="let col of columns">
+                      <ng-container *ngIf="!col.childColumns">
+                        <th [pSortableColumn]="col.field" [attr.rowspan]="getDeepestColumnsChildColumnLevel(columns)">
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                      </ng-container>
+                      <ng-container *ngIf="col.childColumns">
+                        <th [pSortableColumn]="col.field+'.'+col.childColumns[0].field"
+                            [attr.colspan]="getChildColumns(col)">
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field+'.'+col.childColumns[0].field"></p-sortIcon>
+                        </th>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+
+                  <tr>
+                    <th>
+                    </th>
+                    <ng-container *ngFor="let col of columns">
+                      <ng-container *ngIf="!col.childColumns">
+                        <th *ngFor="let childCol of col.childColumns" [pSortableColumn]="col.field+'.'+childCol.field">
+                          {{childCol.header}}
+                          <p-sortIcon [field]="col.field+'.'+childCol.field"></p-sortIcon>
+                        </th>
+                      </ng-container>
+                      <ng-container *ngIf="col.childColumns">
+                        <th *ngFor="let childCol of col.childColumns" [pSortableColumn]="col.field+'.'+childCol.field">
+                          {{childCol.header}}
+                          <p-sortIcon [field]="col.field+'.'+childCol.field"></p-sortIcon>
+                        </th>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+
+                  <!--FILTERS-->
+                  <tr>
+
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                    </th>
+
+                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                      <ng-container *ngIf="!col.childColumns">
+                        <th>
+                          <p-multiSelect [panelStyle]="{'font-size': '12px'}" appendTo="body" *ngSwitchCase="'code'"
+                                         [options]="codeItems" (onChange)="dt.filter($event.value, col.field, 'in')"
+                                         defaultLabel="Wybierz kody"
+                                         [maxSelectedLabels]="1"
+                                         selectedItemsLabel="Wybranych: {0}"
+                          ></p-multiSelect>
+                          <input style="width: 100%;" *ngSwitchCase="'name'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                          <p-dropdown *ngSwitchCase="'type'" [options]="moduleTypeItems" [style]="{'width':'100%'}"
+                                      (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+                          <p-dropdown *ngSwitchCase="'semester'" [options]="moduleTypeItems" [style]="{'width':'100%'}"
+                                      (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+                          <p-dropdown *ngSwitchCase="'examType'" [options]="moduleTypeItems" [style]="{'width':'100%'}"
+                                      (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+                        </th>
+                      </ng-container>
+                      <ng-container *ngIf="col.childColumns">
+                        <th *ngFor="let childCol of col.childColumns" [ngSwitch]="childCol.field">
+                          <input style="width: 100%;" *ngSwitchCase="'lecture'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'laboratory'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'blackboard'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'project'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'seminar'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'elearning'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'other'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'laboratoryClassLimit'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'blackboardClassLimit'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'projectClassLimit'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                          <input style="width: 100%;" *ngSwitchCase="'seminarClassLimit'" pInputText type="text"
+                                 (input)="dt.filter($event.target.value, [col.field]+'.'+[childCol.field], childCol.filterMatchMode)">
+                        </th>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+
+                  <tr>
+
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableCheckbox *ngIf="selectionType == SelectionType.CHECKBOX" [value]="rowData"></p-tableCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON" [value]="rowData"></p-tableRadioButton>
+                    </th>
+
+                    <ng-container *ngFor="let col of columns">
+                      <ng-container *ngIf="!col.childColumns">
+                        <td>
+                          {{rowData[col.field]}}
+                        </td>
+                      </ng-container>
+                      <ng-container *ngIf="col.childColumns">
+                        <ng-container *ngFor="let childCol of col.childColumns">
+
+                          <td class="text-right" [pTooltip]="childCol.header" [tooltipPosition]="'bottom'">
+                            {{rowData[col.field] ? (rowData[col.field][childCol.field] != null ?
+                            rowData[col.field][childCol.field] : "-") : '-'}}
+                          </td>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">
+            <span>Użytkownicy</span>
+          </h4>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <p-toast position="bottom-center"></p-toast>
+              <p-table #dt [columns]="columns"
+                       [value]="users"
+                       [(selection)]="selectionType == SelectionType.CHECKBOX ? selectedUsers : selectedUser"
+                       [paginator]="true"
+                       [rows]="20"
+                       [pageLinks]="5"
+                       [loading]="loading"
+                       [rowsPerPageOptions]="[10,15,20,30,50]"
+                       [autoLayout]="true"
+                       (onRowSelect)="onRowSelected($event)"
+                       (onRowUnselect)="onRowUnselected($event)"
+              >
+
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Filtruj globalnie"
+                           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                    </th>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                  </tr>
+                  <!--FILTERS-->
+                  <tr>
+                    <th></th>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                      <input style="width: 100%;" *ngSwitchCase="'firstName'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'lastName'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'identity'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'username'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'email'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'reduction'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'note'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'code'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+                      <p-multiSelect *ngSwitchCase="'degree'"
+                                     [options]="degreeItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <p-multiSelect *ngSwitchCase="'position'"
+                                     [options]="positionItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                    </th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableCheckbox *ngIf="selectionType == SelectionType.CHECKBOX" [value]="rowData"></p-tableCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON" [value]="rowData"></p-tableRadioButton>
+                    </th>
+
+                    <ng-container *ngFor="let col of columns">
+                        <td *ngIf="col.field != 'roles'">
+                          {{rowData[col.field]}}
+                        </td>
+
+                        <td *ngIf="col.field == 'roles'">
+                          <ng-container *ngFor="let role of rowData[col.field]">
+                            {{role.roleType}}
+                          </ng-container>
+                        </td>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+

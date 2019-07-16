@@ -1,0 +1,55 @@
+<nav class="navbar navbar-dark navbar-expand-md p-2 bg-dark">
+  <div class="float-left ml-2">
+    <a aria-controls="sidebarResponsive" aria-expanded="false" aria-label="Toggle sidebar" (click)="toggleSidebar()">
+      <i class="fas" [ngClass]="{'fa-angle-double-right': sidebarExpandedValue, 'fa-angle-double-left': !sidebarExpandedValue}" style="cursor: pointer; color: white;"></i>
+    </a>
+  </div>
+  <div class="float-left">
+    <a class="d-lg-none float-right" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navbar" (click)="toggleNavbar()">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
+      <span class="logo-img"></span>
+      <span class="navbar-title">KRiM SMS</span>
+    </a>
+  </div>
+  <div class="navbar-collapse collapse" id="navbarResponsive" [ngSwitch]="isAuthenticated()">
+    <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="account-menu">
+          <span>
+            <i class="fa fa-user"></i>
+            <span>
+              Ustawienia
+            </span>
+          </span>
+        </a>
+        <ul class="dropdown-menu">
+          <!--<li *ngSwitchCase="true">
+            <a class="dropdown-item" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
+              <i class="fas fa-key"></i>
+              <span>Zmień hasło</span>
+            </a>
+          </li>-->
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" (click)="logout()" id="logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Wyloguj</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <span>
+              <i class="fa fa-home"></i>
+              <span>Strona główna</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+

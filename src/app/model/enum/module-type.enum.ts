@@ -1,0 +1,4 @@
+export enum ModuleType {
+  WITH_CONTACT = 'WITH_CONTACT',
+  WITHOUT_CONTACT = 'WITHOUT_CONTACT'
+}

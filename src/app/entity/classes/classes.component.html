@@ -1,0 +1,171 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Godziny zajęć</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="lectureInput" class="control-label col-form-label">Wykłady</label>
+                  <input [(ngModel)]="classes.lecture" type="number" class="form-control"
+                         name="lecture"
+                         id="lectureInput">
+                  <small class="differ"
+                         *ngIf="classes?.lecture !== classesCopy?.lecture">
+                    {{classesCopy?.lecture}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="laboratoryInput" class="control-label col-form-label">Zajęcia laboratoryjne</label>
+                  <input [(ngModel)]="classes.laboratory" type="number" class="form-control"
+                         name="laboratoryLimit" id="laboratoryInput">
+                  <small class="differ"
+                         *ngIf="classes?.laboratory !== classesCopy?.laboratory">
+                    {{classesCopy?.laboratory}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="blackboardInput" class="control-label col-form-label">Zajęcia tablicowe</label>
+                  <input [(ngModel)]="classes.blackboard" type="number" class="form-control"
+                         name="blackboard"
+                         id="blackboardInput">
+                  <small class="differ" *ngIf="classes?.blackboard !== classesCopy?.blackboard">
+                    {{classesCopy?.blackboard}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="projectInput" class="control-label col-form-label">Zajęcia projektowe</label>
+                  <input [(ngModel)]="classes.project" type="number" class="form-control"
+                         name="project" id="projectInput">
+                  <small class="differ" *ngIf="classes?.project !== classesCopy?.project">
+                    {{classesCopy?.project}}
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="seminarInput" class="control-label col-form-label">Zajęcia seminaryjne</label>
+                  <input [(ngModel)]="classes.seminar" type="number" class="form-control"
+                         name="seminar"
+                         id="seminarInput">
+                  <small class="differ"
+                         *ngIf="classes?.seminar !== classesCopy?.seminar">
+                    {{classesCopy?.seminar}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="practicalInput" class="control-label col-form-label">Zajęcia praktyczne</label>
+                  <input [(ngModel)]="classes.practical" type="number" class="form-control"
+                         name="practical" id="practicalInput">
+                  <small class="differ"
+                         *ngIf="classes?.practical !== classesCopy?.practical">
+                    {{classesCopy?.practical}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="outdoorInput" class="control-label col-form-label">Zajęcia terenowe</label>
+                  <input [(ngModel)]="classes.outdoor" type="number" class="form-control"
+                         name="outdoor"
+                         id="outdoorInput">
+                  <small class="differ" *ngIf="classes?.outdoor !== classesCopy?.outdoor">
+                    {{classesCopy?.outdoor}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="workshopInput" class="control-label col-form-label">Zajęcia warsztatowe</label>
+                  <input [(ngModel)]="classes.workshop" type="number" class="form-control"
+                         name="workshop" id="workshopInput">
+                  <small class="differ" *ngIf="classes?.workshop !== classesCopy?.workshop">
+                    {{classesCopy?.workshop}}
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="elearningInput" class="control-label col-form-label">E-learning</label>
+                  <input [(ngModel)]="classes.elearning" type="number" class="form-control"
+                         name="elearning"
+                         id="elearningInput">
+                  <small class="differ"
+                         *ngIf="classes?.elearning !== classesCopy?.elearning">
+                    {{classesCopy?.elearning}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="otherInput" class="control-label col-form-label">Zajęcia inne</label>
+                  <input [(ngModel)]="classes.other" type="number" class="form-control"
+                         name="other" id="otherInput">
+                  <small class="differ"
+                         *ngIf="classes?.other !== classesCopy?.other">
+                    {{classesCopy?.other}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="sumInput" class="control-label col-form-label">Suma</label>
+                  <input [(ngModel)]="classes.sum" type="number" class="form-control"
+                         name="sum"
+                         id="sumInput">
+                  <small class="differ" *ngIf="classes?.sum !== classesCopy?.sum">
+                    {{classesCopy?.sum}}
+                  </small>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange(); update()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+                <button type="submit" (click)="onConfirmChange(); saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

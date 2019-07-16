@@ -1,0 +1,513 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">
+            <span>Moduły - informacje generalne</span>
+          </h4>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <p-toast position="bottom-center"></p-toast>
+              <p-table #dt [columns]="columns"
+                       [value]="moduleGeneralInformations"
+                       [(selection)]="selectedModuleGeneralInformation"
+                       [paginator]="true"
+                       [rows]="20"
+                       [pageLinks]="5"
+                       [loading]="loading"
+                       [rowsPerPageOptions]="[10,15,20,30,50]"
+                       [autoLayout]="true"
+                       (onEditComplete)="getRow($event)"
+              >
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Filtruj globalnie"
+                           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableHeaderCheckbox *ngIf="selectionType == SelectionType.CHECKBOX"></p-tableHeaderCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON"></p-tableRadioButton>
+                    </th>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                  </tr>
+                  <!--FILTERS-->
+                  <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                      <p-multiSelect [panelStyle]="{'font-size': '12px'}"
+                                     *ngSwitchCase="'code'"
+                                     [options]="codeItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz kody"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <!--<p-multiSelect *ngSwitchCase="'responsibleUserSignature'"
+                                     [options]="responsibleUserSignatureItems"
+                                     (onChange)="dt.filter($event.value.email, col.field.email, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <p-multiSelect *ngSwitchCase="'responsibleTeacher'"
+                                     [options]="responsibleTeacherItems"
+                                     (onChange)="dt.filter($event.value.email, col.field.email, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>-->
+
+                      <p-multiSelect *ngSwitchCase="'studyLevel'"
+                                     [options]="studyLevelItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <p-multiSelect *ngSwitchCase="'studyType'"
+                                     [options]="studyTypeItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <p-multiSelect *ngSwitchCase="'lectureLanguage'"
+                                     [options]="lectureLanguageItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                      <input style="width: 100%;" *ngSwitchCase="'name'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'studyCourse'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'faculty'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'studyField'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'semester'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'educationProfile'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+                    </th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableCheckbox *ngIf="selectionType == SelectionType.CHECKBOX" [value]="rowData"></p-tableCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON" [value]="rowData"></p-tableRadioButton>
+                    </th>
+
+                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                      <ng-container>
+                        <!--<td
+                          *ngIf="col.field != 'actions'"
+                          pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>-->
+
+
+                        <td *ngSwitchCase="'name'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'studyCourse'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'code'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'faculty'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'studyLevel'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <select [(ngModel)]="rowData[col.field]" (change)="onStudyTypeSelectChange($event)">
+                                <option *ngFor="let studyLevel of studyLevels" value="{{studyLevel}}">{{studyLevel}}
+                                </option>
+                              </select>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'studyField'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'semester'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="number" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'educationProfile'" pEditableColumn [pEditableColumn]="rowData" [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'lectureLanguage'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <select [(ngModel)]="rowData[col.field]" (change)="onLanguageSelectChange($event)">
+                                <option *ngFor="let lectureLanguage of lectureLanguages" value="{{lectureLanguage}}">
+                                  {{lectureLanguage}}
+                                </option>
+                              </select>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'studyType'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <select [(ngModel)]="rowData[col.field]" (change)="onStudyTypeSelectChange($event)">
+                                <option *ngFor="let studyType of studyTypes" value="{{studyType}}">{{studyType}}
+                                </option>
+                              </select>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <!--<td *ngSwitchCase="'responsibleUserSignature'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <div class="container">
+                                <div class="row flex-nowrap">
+                                  <div class="col-sm-2 pl-0 mr-1">
+                                    <div class="d-inline-block">
+                                      <button (click)="selectUser(rowData[col.field])" data-toggle="modal"
+                                              data-target="#edit-modal" class="btn btn-primary btn-xsm">
+                                        <i class="fas fa-edit"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-2 pl-0 mr-1">
+                                    <div>
+                                      <button (focus)="blur($event)" class="btn btn-primary btn-xsm">
+                                        <i class="fas fa-check"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-8 text-left text-nowrap">
+                                    {{rowData[col.field]?.email}}
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]?.email}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>-->
+
+                        <td *ngSwitchCase="'responsibleUserSignature'">
+                          <button (click)="mark(rowData)" data-target="#responsible-user-signature" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'academicUserSignatures'">
+                          <button (click)="mark(rowData)" data-target="#academic-user-signatures" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'module'">
+                          <button (click)="markModule(rowData)" data-target="#module" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                          </button>
+                        </td>
+
+
+                        <td *ngSwitchCase="'responsibleTeacher'">
+                          <button (click)="mark(rowData)" data-target="#responsible-teacher" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                          </button>
+                        </td>
+
+                        <!--<td *ngSwitchCase="'responsibleTeacher'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <div class="container">
+                                <div class="row flex-nowrap">
+                                  <div class="col-sm-2 pl-0 mr-1">
+                                    <div class="d-inline-block">
+                                      <button (click)="selectResponsibleTeacher(rowData[col.field])" data-toggle="modal"
+                                              data-target="#edit-modal" class="btn btn-primary btn-xsm">
+                                        <i class="fas fa-edit"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-2 pl-0 mr-1">
+                                    <div>
+                                      <button (focus)="blur($event)" class="btn btn-primary btn-xsm">
+                                        <i class="fas fa-check"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-8 text-left text-nowrap">
+                                    {{rowData[col.field]?.email}}
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]?.email}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>-->
+
+                        <td *ngSwitchCase="'academicTeachers'">
+                          <button (click)="mark(rowData)" data-target="#academic-teachers" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'actions'" pEditableColumn [pEditableColumn]="rowData"
+                            style="cursor: default"
+                            [pEditableColumnField]="col.field" class="text-right">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <div class="container px-0">
+                                <div class="row no-gutters flex-nowrap">
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button [routerLink]="['/module-general-informations/' + rowData['id']]"
+                                            pTooltip="Szczegóły"
+                                            class="btn btn-primary btn-xsm">
+                                      <i class="fas fa-search-plus"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#delete-modal" data-toggle="modal"
+                                            class="btn btn-primary btn-xsm" pTooltip="Usuń">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#update-modal" data-toggle="modal"
+                                            pTooltip="Zapisz" class="btn btn-primary btn-xsm mr-2">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              <div class="container px-0">
+                                <div class="row no-gutters flex-nowrap">
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button [routerLink]="['/module-general-informations/' + rowData['id']]"
+                                            pTooltip="Szczegóły"
+                                            class="btn btn-primary btn-xsm">
+                                      <i class="fas fa-search-plus"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#delete-modal" data-toggle="modal"
+                                            class="btn btn-primary btn-xsm" pTooltip="Usuń">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#update-modal" data-toggle="modal"
+                                            pTooltip="Zapisz" class="btn btn-primary btn-xsm mr-2">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-modal
+  [id]="'delete-modal'"
+  [header]="'Potwierdzenie usunięcia'"
+  [description]="'Czy napewno chcesz usunąć wybrany rekord?'"
+  [closeDescription]="'Nie'"
+  [confirmDescription]="'Tak'"
+  (onConfirm)="delete()">
+</confirmation-modal>
+
+<confirmation-modal
+  [id]="'update-modal'"
+  [header]="'Potwierdzenie aktualizacji'"
+  [description]="'Czy napewno chcesz zaktualizować wybrany rekord?'"
+  [closeDescription]="'Nie'"
+  [confirmDescription]="'Tak'"
+  (onConfirm)="update()">
+</confirmation-modal>
+
+<!--<common-modal *ngIf="markedModuleGeneralInformation"
+              [id]="'module'"
+              [header]="'Powiązany moduł'"
+>
+  <ng-template let-desc="description">
+    <app-module-list-view [(selectedModule)]="moduleGeneralInformationModule" [selectionType]="SelectionType.RADIOBUTTON"></app-module-list-view>
+  </ng-template>
+</common-modal>-->
+
+
+<common-modal *ngIf="markedModuleGeneralInformation"
+              [id]="'responsible-user-signature'"
+              [header]="'Odpowiedzialny użytkownik'"
+>
+  <ng-template let-desc="description">
+    <app-user-signature-list-view [(selectedUserSignatureId)]="markedModuleGeneralInformation.responsibleUserSignatureId" [selectionType]="SelectionType.RADIOBUTTON" (selectionsReloaded)="reloadMarkedModuleGeneralInformation = false" [loadSelections]="reloadMarkedModuleGeneralInformation"></app-user-signature-list-view>
+  </ng-template>
+</common-modal>
+
+<common-modal *ngIf="markedModuleGeneralInformation"
+              [id]="'academic-user-signatures'"
+              [header]="'Prowadzący użytkownicy'"
+>
+  <ng-template let-desc="description">
+    <app-user-signature-list-view [(selectedUserSignatureIds)]="markedModuleGeneralInformation.academicUserSignaturesIds" [selectionType]="SelectionType.CHECKBOX" (selectionsReloaded)="reloadMarkedModuleGeneralInformation = false" [loadSelections]="reloadMarkedModuleGeneralInformation"></app-user-signature-list-view>
+  </ng-template>
+</common-modal>
+
+
+<common-modal *ngIf="markedModuleGeneralInformation"
+              [id]="'responsible-teacher'"
+              [header]="'Odpowiedzialny użytkownik'"
+>
+  <ng-template let-desc="description">
+    <app-user-list-view [(selectedUserId)]="markedModuleGeneralInformation.responsibleTeacherId" [selectionType]="SelectionType.RADIOBUTTON" (selectionsReloaded)="reloadMarkedModuleGeneralInformation = false" [loadSelections]="reloadMarkedModuleGeneralInformation"></app-user-list-view>
+  </ng-template>
+</common-modal>
+
+<common-modal *ngIf="markedModuleGeneralInformation"
+              [id]="'academic-teachers'"
+              [header]="'Prowadzący użytkownicy'"
+>
+  <ng-template let-desc="description">
+    <app-user-list-view [(selectedUsersIds)]="markedModuleGeneralInformation.academicTeachersIds" [selectionType]="SelectionType.CHECKBOX" (selectionsReloaded)="reloadMarkedModuleGeneralInformation = false" [loadSelections]="reloadMarkedModuleGeneralInformation"></app-user-list-view>
+  </ng-template>
+</common-modal>
+
+
+<common-modal *ngIf="markedModuleGeneralInformation"
+              [id]="'module'"
+              [header]="'Powiązany moduł'"
+>
+  <ng-template let-desc="description">
+    <app-module-list-view [(selectedModuleId)]="markedModuleGeneralInformation.moduleId" [selectionType]="SelectionType.RADIOBUTTON" (selectionsReloaded)="reloadMarkedModuleGeneralInformation = false" [loadSelections]="reloadMarkedModuleGeneralInformation"></app-module-list-view>
+  </ng-template>
+</common-modal>
+

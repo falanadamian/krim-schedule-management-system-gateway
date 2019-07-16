@@ -1,0 +1,132 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Konfiguracja- limity</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="partTimeInput" class="control-label col-form-label">Limit/etat dla części etatu</label>
+                  <input [(ngModel)]="limitConfig.partTime" type="number" class="form-control"
+                         name="partTime"
+                         id="partTimeInput">
+                  <small class="differ"
+                         *ngIf="limitConfig?.partTime !== limitConfigCopy?.partTime">
+                    {{limitConfigCopy?.partTime}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="fullTimeInput" class="control-label col-form-label">Limit/etat dla pełnego etatu (godz. żywe)</label>
+                  <input [(ngModel)]="limitConfig.fullTime" type="number" class="form-control"
+                         name="fullTime" id="fullTimeInput">
+                  <small class="differ"
+                         *ngIf="limitConfig?.fullTime !== limitConfigCopy?.fullTime">
+                    {{limitConfigCopy?.fullTime}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="fullTimePolishInput" class="control-label col-form-label">Limit/etat dla pełnego etatu (wszystko j.pol.)</label>
+                  <input [(ngModel)]="limitConfig.fullTimePolish" type="number" class="form-control"
+                         name="fullTimePolish"
+                         id="fullTimePolishInput">
+                  <small class="differ" *ngIf="limitConfig?.fullTimePolish !== limitConfigCopy?.fullTimePolish">
+                    {{limitConfigCopy?.fullTimePolish}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="fullTimeEnglishInput" class="control-label col-form-label">Limit/etat dla pełnego etatu (wszystko j.ang.)</label>
+                  <input [(ngModel)]="limitConfig.fullTimeEnglish" type="number" class="form-control"
+                         name="fullTimeEnglish" id="fullTimeEnglishInput">
+                  <small class="differ" *ngIf="limitConfig?.fullTimeEnglish !== limitConfigCopy?.fullTimeEnglish">
+                    {{limitConfigCopy?.fullTimeEnglish}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="bachelorThesisInput" class="control-label col-form-label">Limit prac inż.</label>
+                  <input [(ngModel)]="limitConfig.bachelorThesis" type="number" class="form-control"
+                         name="bachelorThesis"
+                         id="bachelorThesisInput">
+                  <small class="differ"
+                         *ngIf="limitConfig?.bachelorThesis !== limitConfigCopy?.bachelorThesis">
+                    {{limitConfigCopy?.bachelorThesis}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="masterThesisInput" class="control-label col-form-label">Limit prac mgr</label>
+                  <input [(ngModel)]="limitConfig.masterThesis" type="number" class="form-control"
+                         name="masterThesis" id="masterThesisInput">
+                  <small class="differ"
+                         *ngIf="limitConfig?.masterThesis !== limitConfigCopy?.masterThesis">
+                    {{limitConfigCopy?.masterThesis}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="hoursForExamPerYearInput" class="control-label col-form-label">Limit godz. za egzaminy/rok</label>
+                  <input [(ngModel)]="limitConfig.hoursForExamPerYear" type="number" class="form-control"
+                         name="hoursForExamPerYear"
+                         id="hoursForExamPerYearInput">
+                  <small class="differ" *ngIf="limitConfig?.hoursForExamPerYear !== limitConfigCopy?.hoursForExamPerYear">
+                    {{limitConfigCopy?.hoursForExamPerYear}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="physicalHoursInput" class="control-label col-form-label">Minimum godz. żywych/etat</label>
+                  <input [(ngModel)]="limitConfig.physicalHours" type="number" class="form-control"
+                         name="physicalHours" id="physicalHoursInput">
+                  <small class="differ" *ngIf="limitConfig?.physicalHours !== limitConfigCopy?.physicalHours">
+                    {{limitConfigCopy?.physicalHours}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange(); update()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+                <button type="submit" (click)="saveOrUpdate()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

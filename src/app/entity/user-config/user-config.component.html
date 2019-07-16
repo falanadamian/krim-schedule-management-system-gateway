@@ -1,0 +1,85 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Konfiguracja użytkowników</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="positionSelection" class="control-label col-form-label">Stopień/ tytuł (Stanowisko)</label>
+                  <select [(ngModel)]="userConfig.position" name="positionSelect" class="form-control" id="positionSelection">
+                    <option *ngFor="let position of positions" value="{{position}}">{{position}}</option>
+                  </select>
+                  <small class="differ" *ngIf="userConfig?.position !== userConfigCopy?.position">
+                    {{userConfigCopy?.position}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="pensumInput" class="control-label col-form-label">Pensum/ etat</label>
+                  <input [(ngModel)]="userConfig.pensum" type="text" class="form-control" name="pensum"
+                         id="pensumInput">
+                  <small class="differ" *ngIf="userConfig?.pensum !== userConfigCopy?.pensum">
+                    {{userConfigCopy?.pensum}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="pensumLimitInput" class="control-label col-form-label">Limit pensum/ etat</label>
+                  <input [(ngModel)]="userConfig.pensumLimit" type="text" class="form-control" name="pensumLimit" id="pensumLimitInput">
+                  <small class="differ" *ngIf="userConfig?.pensumLimit !== userConfigCopy?.pensumLimit">
+                    {{userConfigCopy?.pensumLimit}}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="overtimeRateFullTimeInput" class="control-label col-form-label">Nadgodziny stawka brutton /h stacjonarne</label>
+                  <input [(ngModel)]="userConfig.overtimeRateFullTime" type="text" class="form-control" name="overtimeRateFullTime" id="overtimeRateFullTimeInput">
+                  <small class="differ" *ngIf="userConfig?.overtimeRateFullTime !== userConfigCopy?.overtimeRateFullTime">
+                    {{userConfigCopy?.overtimeRateFullTime}}
+                  </small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="overtimeRatePartTimeInput" class="control-label col-form-label">Nadgodziny stawka brutton /h niestacjonarne</label>
+                  <input [(ngModel)]="userConfig.overtimeRatePartTime" type="text" class="form-control" name="overtimeRatePartTime" id="overtimeRatePartTimeInput">
+                  <small class="differ" *ngIf="userConfig?.overtimeRatePartTime !== userConfigCopy?.overtimeRatePartTime">
+                    {{userConfigCopy?.overtimeRatePartTime}}
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button *ngIf="outsourced" type="submit" (click)="onCancelChange()" data-dismiss="modal" class="btn btn-dark waves-effect waves-light float-left"><i
+                  class="fas fa-chevron-left"></i> Powrót
+                </button>
+                <button type="submit" (click)="clear()" data-dismiss="modal" class="btn btn-dark waves-effect waves-light ml-1">Wyczyść</button>
+                <button *ngIf="outsourced" type="submit" (click)="onConfirmChange(); update()" data-dismiss="modal" class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz</button>
+                <button  type="submit" (click)="saveOrUpdate()" data-dismiss="modal" class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

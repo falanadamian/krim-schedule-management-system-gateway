@@ -1,0 +1,330 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">
+            <span>Zlecenia</span>
+          </h4>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <p-toast position="bottom-center"></p-toast>
+              <p-table #dt [columns]="columns"
+                       [value]="errands"
+                       [(selection)]="selectedErrand"
+                       [paginator]="true"
+                       [rows]="20"
+                       [pageLinks]="5"
+                       [loading]="loading"
+                       [rowsPerPageOptions]="[10,15,20,30,50]"
+                       [autoLayout]="true"
+                       (onEditComplete)="getRow($event)"
+              >
+                <ng-template pTemplate="caption">
+                  <div style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Filtruj globalnie"
+                           (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                  </div>
+                </ng-template>
+
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableHeaderCheckbox *ngIf="selectionType == SelectionType.CHECKBOX"></p-tableHeaderCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON"></p-tableRadioButton>
+                    </th>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </th>
+                  </tr>
+                  <!--FILTERS-->
+                  <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                      <input style="width: 100%;" *ngSwitchCase="'hours'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'groups'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'students'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'additionalHoursRatio'" pInputText type="number"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'errandNumber'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'department'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'note'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                      <input style="width: 100%;" *ngSwitchCase="'code'" pInputText type="text"
+                             (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+                      <p-multiSelect *ngSwitchCase="'classType'"
+                                     [options]="classTypeItems"
+                                     (onChange)="dt.filter($event.value, col.field, 'in')"
+                                     appendTo="body"
+                                     defaultLabel="Wybierz"
+                                     [maxSelectedLabels]="1"
+                                     selectedItemsLabel="Wybranych: {0}"
+                      ></p-multiSelect>
+
+                    </th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+
+                    <th *ngIf="selectionType != SelectionType.NONE">
+                      <p-tableCheckbox *ngIf="selectionType == SelectionType.CHECKBOX" [value]="rowData"></p-tableCheckbox>
+                      <p-tableRadioButton *ngIf="selectionType == SelectionType.RADIOBUTTON" [value]="rowData"></p-tableRadioButton>
+                    </th>
+
+
+                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                      <ng-container>
+
+                        <td *ngSwitchCase="'classType'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <select [(ngModel)]="rowData[col.field]" (change)="onDegreeSelectChange($event)">
+                                <option *ngFor="let classType of classTypes" value="{{classType}}">{{classType}}
+                                </option>
+                              </select>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'hours'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="number" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'groups'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="number" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'students'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="number" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'additionalHoursRatio'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="number" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'errandNumber'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'department'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'note'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'code'" pEditableColumn [pEditableColumn]="rowData"
+                            [pEditableColumnField]="col.field">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input type="text" [(ngModel)]="rowData[col.field]">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData[col.field]}}
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+
+                        <td *ngSwitchCase="'moduleId'" class="text-center">
+                          <button (click)="markModule(rowData)" data-target="#module" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'documentId'" class="text-center">
+                          <button (click)="mark(rowData)" data-target="#document" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'scheduleId'" class="text-center">
+                          <button (click)="mark(rowData)" data-target="#schedule" data-toggle="modal"
+                                  class="btn btn-primary btn-xsm mr-2 w-100">Wyświetl
+                          </button>
+                        </td>
+
+                        <td *ngSwitchCase="'actions'" pEditableColumn [pEditableColumn]="rowData"
+                            style="cursor: default"
+                            [pEditableColumnField]="col.field" class="text-right">
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <div class="container px-0">
+                                <div class="row no-gutters flex-nowrap">
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button [routerLink]="['/errands/' + rowData['id']]" pTooltip="Szczegóły"
+                                            class="btn btn-primary btn-xsm">
+                                      <i class="fas fa-search-plus"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#delete-modal" data-toggle="modal"
+                                            class="btn btn-primary btn-xsm" pTooltip="Usuń">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#update-modal" data-toggle="modal"
+                                            pTooltip="Zapisz" class="btn btn-primary btn-xsm mr-2">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              <div class="container px-0">
+                                <div class="row no-gutters flex-nowrap">
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button [routerLink]="['/errands/' + rowData['id']]" pTooltip="Szczegóły"
+                                            class="btn btn-primary btn-xsm">
+                                      <i class="fas fa-search-plus"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#delete-modal" data-toggle="modal"
+                                            class="btn btn-primary btn-xsm" pTooltip="Usuń">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  <div class="col-sm-4 px-0 mr-1">
+                                    <button (click)="mark(rowData)" data-target="#update-modal" data-toggle="modal"
+                                            pTooltip="Zapisz" class="btn btn-primary btn-xsm mr-2">
+                                      <i class="fas fa-check"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-modal
+  [id]="'delete-modal'"
+  [header]="'Potwierdzenie usunięcia'"
+  [description]="'Czy napewno chcesz usunąć wybrany rekord?'"
+  [closeDescription]="'Nie'"
+  [confirmDescription]="'Tak'"
+  (onConfirm)="delete()">
+</confirmation-modal>
+
+<confirmation-modal
+  [id]="'update-modal'"
+  [header]="'Potwierdzenie aktualizacji'"
+  [description]="'Czy napewno chcesz zaktualizować wybrany rekord?'"
+  [closeDescription]="'Nie'"
+  [confirmDescription]="'Tak'"
+  (onConfirm)="update()">
+</confirmation-modal>
+
+<common-modal *ngIf="markedErrand"
+              [id]="'module'"
+              [header]="'Powiązany moduł'"
+>
+  <ng-template let-desc="description">
+    <app-module-list-view [(selectedModule)]="errandModule" [selectionType]="SelectionType.RADIOBUTTON"></app-module-list-view>
+  </ng-template>
+</common-modal>
+
+<common-modal *ngIf="markedErrand"
+              [id]="'document'"
+              [header]="'Powiązany dokument'"
+>
+  <ng-template let-desc="description">
+  </ng-template>
+</common-modal>
+
+<common-modal *ngIf="markedErrand"
+              [id]="'schedule'"
+              [header]="'Powiązany plan'"
+>
+  <ng-template let-desc="description">
+    <app-schedule></app-schedule>
+  </ng-template>
+</common-modal>

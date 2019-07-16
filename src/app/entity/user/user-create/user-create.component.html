@@ -1,0 +1,204 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 px-0">
+      <div class="card">
+        <form>
+          <div class="card-body">
+            <h4 class="card-title">
+              <span>Nowy użytkownik</span>
+            </h4>
+            <p-toast position="bottom-center"></p-toast>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Informacje podstawowe</h5>
+            <div class="row">
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="firstnameInput" class="control-label col-form-label">Imię</label>
+                  <input [(ngModel)]="user.firstName" type="text" class="form-control" name="firstname"
+                         id="firstnameInput" placeholder="Imię">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="surnameInput" class="control-label col-form-label">Nazwisko</label>
+                  <input [(ngModel)]="user.lastName" type="text" class="form-control" name="surname" id="surnameInput"
+                         placeholder="Nazwisko">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3">
+                <div class="form-group">
+                  <label for="emailInput" class="control-label col-form-label">Email</label>
+                  <input [(ngModel)]="user.email" type="text" class="form-control" name="email" id="emailInput"
+                         placeholder="Email">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-2">
+                <div class="form-group">
+                  <label for="usernameInput" class="control-label col-form-label">Username</label>
+                  <input [(ngModel)]="user.username" type="text" class="form-control" name="username" id="usernameInput"
+                         placeholder="Username">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-1">
+                <div class="form-group">
+                  <label for="identityInput" class="control-label col-form-label">Id</label>
+                  <input [(ngModel)]="user.identity" type="text" class="form-control" name="identity" id="identityInput"
+                         placeholder="Id">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="roleSelection" class="control-label col-form-label">RoleType użytkownika</label>
+                  <p-multiSelect [options]="roleItems" [(ngModel)]="user.roles" [filter]="false"
+                                 defaultLabel="Wybierz role" name="roleSelect" id="roleSelection"></p-multiSelect>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="degreeSelection" class="control-label col-form-label">Stopień użytkownika</label>
+                  <select class="form-control" [(ngModel)]="user.degree" name="degreeSelect"
+                          id="degreeSelection">
+                    <option *ngFor="let degree of degrees" value="{{degree}}">{{degree}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="positionSelection" class="control-label col-form-label">Stanowisko użytkownika</label>
+                  <select [(ngModel)]="user.position" name="positionSelect" class="form-control" id="positionSelection">
+                    <option *ngFor="let position of positions" value="{{position}}">{{position}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Dodaj plik</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="inputGroupFile01">
+                      <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="control-label col-form-label">Uwagi</label>
+                  <textarea [(ngModel)]="user.note" class="form-control" name="notes" placeholder="Uwagi"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <h5 class="card-title">Powiązane</h5>
+            <div class="row">
+              <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label for="allModulesButton" class="control-label col-form-label">Opiekun modułów</label>
+                  <button (click)="loadModulesInChargeover()" data-toggle="modal" id="allModulesButton" data-target="#modules-in-charge"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl moduły</h5>
+                  </button>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label for="modulesCreatedButton" class="control-label col-form-label">Uczestnik modułów</label>
+                  <button (click)="loadModulesInManagement()" data-toggle="modal" id="modulesCreatedButton" data-target="#modules-in-management"
+                          class="btn btn-primary form-control">
+                    <h5>Wyświetl moduły</h5>
+                  </button>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label for="modulesInChargeButton" class="control-label col-form-label">Dobierz zlecenia</label>
+                  <button data-toggle="modal" id="modulesInChargeButton" data-target="#edit-modal"
+                          class="btn btn-primary form-control">
+                    <h5>Dobierz zlecenia</h5>
+                  </button>
+                </div>
+              </div>
+              <!--<div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label for="modulesInManagementButton" class="control-label col-form-label">Wybierz
+                    konfigurację</label>
+                  <button data-toggle="modal" id="modulesInManagementButton" data-target="#user-config"
+                          class="btn btn-primary form-control">
+                    <h5>Wybierz konfigurację</h5>
+                  </button>
+                </div>
+              </div>-->
+              <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label for="studyInfo" class="control-label col-form-label">Informacje o studiach</label>
+                  <button data-toggle="modal" id="studyInfo" data-target="#study-info"
+                          class="btn btn-primary form-control">
+                    <h5>Studia</h5>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-body">
+            <div class="action-form">
+              <div class="form-group m-b-0 text-right">
+                <button type="submit" (click)="clear()" data-dismiss="modal"
+                        class="btn btn-dark waves-effect waves-light ml-1">Wyczyść
+                </button>
+                <button type="submit" (click)="save()" data-dismiss="modal"
+                        class="btn btn-info m-r-5 waves-effect waves-light ml-1">Zapisz
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<common-modal [id]="'modules-in-charge'"
+              [header]="'Wybierz prowadzone moduły'"
+>
+  <ng-template let-desc="description">
+    <app-module-general-information-list-view [(selectedModuleGeneralInformationIds)]="user.modulesInChargeovesIds" (selectionsReloaded)="shouldLoadModulesInChargeover = false" [loadSelections]="shouldLoadModulesInChargeover"></app-module-general-information-list-view>
+  </ng-template>
+</common-modal>
+
+<common-modal [id]="'modules-in-management'"
+              [header]="'Wybierz powiązane moduły'"
+>
+  <ng-template let-desc="description">
+    <app-module-general-information-list-view [(selectedModuleGeneralInformationIds)]="user.modulesInManagementIds" (selectionsReloaded)="shouldLoadModulesInManagement = false" [loadSelections]="shouldLoadModulesInManagement"></app-module-general-information-list-view>
+  </ng-template>
+</common-modal>
+
+<!--<common-modal [id]="'user-config'"
+              [header]="'Wybierz konfigurację'"
+>
+  <ng-template let-desc="description">
+    <user-config-list-view [(selectedUserConfig)]="user.userConfig" [selectionType]="SelectionType.RADIOBUTTON"></user-config-list-view>
+  </ng-template>
+</common-modal>-->
+
+
+<common-modal [id]="'study-info'"
+              [header]="'Wprowadź informacje o studiach'"
+>
+  <ng-template let-desc="description">
+    <study-info [(studyInfo)]="user.studyInfo" [outsourced]="true"></study-info>
+  </ng-template>
+</common-modal>

@@ -1,0 +1,18 @@
+.modal.fade.show .modal-dialog.modal-dialog-slideout {
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+@keyframes bounce {
+  0% {transform: translateY(-15%);}
+  20% {transform: translateY(5%);}
+  40% {transform: translateY(-5%);}
+  60% {transform: translateY(2%);}
+  80% {transform: translateY(-2%);}
+  100% {transform: translateY(0%);}
+}
+
+.modal-xl {
+  max-width: 95%!important;
+}

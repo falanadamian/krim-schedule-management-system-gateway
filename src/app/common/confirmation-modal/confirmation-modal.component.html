@@ -1,0 +1,19 @@
+<div class="modal fade" id="{{id}}" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-slideout modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationLabel">{{header}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{description}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{closeDescription}}</button>
+        <button (click)="onConfirmChange()" data-dismiss="modal" type="button" class="btn btn-primary">{{confirmDescription}}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.sidebar{
+  width:220px;
+  height: calc(100vh - 59px);
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+.sidebar li a,.sidebar .collapsed.active{
+  display:block;
+  padding:8px 12px;
+}
+
+a:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.sub-menu a:hover {
+  background-color: darkred;
+}
+
+.sidebar.sidebar-expanded .sidebar-label {
+  display: none;
+}
+
+.sidebar.sidebar-expanded {
+  width: 46px;
+  height: calc(100vh - 59px);
+  /*height: 90vh;*/
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+
+.sidebar li{
+  list-style-type: none;
+}
+
+.sidebar.sidebar-expanded li{
+  position:relative
+}
+
+.sidebar.sidebar-expanded .sub-menu {
+  position: absolute;
+  left: 46px;
+  top: 0;
+  z-index: 1;
+}
